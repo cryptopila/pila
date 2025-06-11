@@ -6,7 +6,8 @@ This document outlines the initial ideas for migrating the current C++ codebase 
 - Rewrite/enhancement based on Peercoin PoS and Bitcoin PoW
 - Contains custom features: UDP layer, ZeroTime transaction locking, Incentive Reward, ChainBlender
 - Relies heavily on Boost, Berkeley DB and OpenSSL
-- Codebase has roughly 100k lines of C/C++ spread across `coin`, `database` and `crawler`
+- Codebase has roughly 100k lines of C/C++ spread across `coin`, `database` and `crawler`.
+  See [module_mapping.md](module_mapping.md) for a proposed mapping of these directories to Go packages.
 
 ## Probability Estimate
 Due to the large size and complexity of the existing code, the migration to Go is estimated to have a **low probability of success (around 20%)** without significant resources and a dedicated team.
@@ -23,6 +24,14 @@ Due to the large size and complexity of the existing code, the migration to Go i
 6. **Custom Features**: port ZeroTime, ChainBlender and Incentive.
 7. **RPC Services**: expose wallet and blockchain operations via Go's HTTP or gRPC.
 8. **Build & Tests**: use `go mod`, write unit and integration tests for each module.
+
+## Immediate Task List
+
+- [ ] Evaluate dependencies in `coin`, `database` and `crawler`.
+- [ ] Prototype block and transaction structures in Go.
+- [ ] Implement a basic P2P handshake.
+- [ ] Stub LevelDB interactions for the `database` package.
+- [ ] Replace Boost-based networking in the `crawler` component.
 
 ## What Can Be Ignored or Replaced
 - Custom cryptographic utility implementations can be replaced by Go's `crypto` packages.
@@ -45,3 +54,14 @@ Due to the large size and complexity of the existing code, the migration to Go i
 - Expand the P2P network layer using a `btcd`-style implementation.
 - Flesh out block validation logic and integrate storage with `goleveldb`.
 
+## Verifying the Go Environment
+
+After running `go mod init pila`, a tiny executable can be built to
+confirm that Go is installed correctly. From the repository root run:
+
+```bash
+go run ./cmd/pila
+```
+
+This should print `pila go stub running` confirming the environment is ready
+for further development.
