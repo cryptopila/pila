@@ -24,6 +24,14 @@ Due to the large size and complexity of the existing code, the migration to Go i
 7. **RPC Services**: expose wallet and blockchain operations via Go's HTTP or gRPC.
 8. **Build & Tests**: use `go mod`, write unit and integration tests for each module.
 
+## Immediate Task List
+
+- [ ] Evaluate dependencies in `coin`, `database` and `crawler`.
+- [ ] Prototype block and transaction structures in Go.
+- [ ] Implement a basic P2P handshake.
+- [ ] Stub LevelDB interactions for the `database` package.
+- [ ] Replace Boost-based networking in the `crawler` component.
+
 ## What Can Be Ignored or Replaced
 - Custom cryptographic utility implementations can be replaced by Go's `crypto` packages.
 - LevelDB C++ code can be replaced by the Go wrapper `goleveldb`.
