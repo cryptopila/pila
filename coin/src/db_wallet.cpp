@@ -1,10 +1,10 @@
 /*
  * Copyright (c) 2013-2016 John Connor
- * Copyright (c) 2016-2017 The Vcash developers
+ * Copyright (c) 2016-2017 The Pila developers
  *
- * This file is part of vcash.
+ * This file is part of pila.
  *
- * vcash is free software: you can redistribute it and/or modify
+ * pila is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License with
  * additional permissions to the one published by the Free Software
  * Foundation, either version 3 of the License, or (at your option)
@@ -452,7 +452,7 @@ bool db_wallet::backup(const wallet & w, const std::string & root_path)
              */
             if (
                 filesystem::copy_file(filesystem::data_path() + "wallet.dat",
-                "/sdcard/Android/data/net.vcash.vcash/wallet.dat"
+                "/sdcard/Android/data/net.pila.pila/wallet.dat"
                 ) == true
                 )
             {

@@ -1,10 +1,10 @@
 /*
  * Copyright (c) 2013-2016 John Connor
- * Copyright (c) 2016-2017 The Vcash developers
+ * Copyright (c) 2016-2017 The Pila developers
  *
- * This file is part of vcash.
+ * This file is part of pila.
  *
- * vcash is free software: you can redistribute it and/or modify
+ * pila is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License with
  * additional permissions to the one published by the Free Software
  * Foundation, either version 3 of the License, or (at your option)
@@ -888,7 +888,7 @@ bool rpc_connection::send_json_rpc_response(
         http_response += "Content-Length: " +
             std::to_string(body.size()) + "\r\n"
         ;
-        http_response += "Server: vcash JSON-RPC 2.0\r\n";
+        http_response += "Server: pila JSON-RPC 2.0\r\n";
         http_response += "\r\n";
         
         http_response += body;
@@ -1011,7 +1011,7 @@ bool rpc_connection::send_json_rpc_responses(
         http_response += "Content-Length: " +
             std::to_string(body.size()) + "\r\n"
         ;
-        http_response += "Server: vcash JSON-RPC 2.0\r\n";
+        http_response += "Server: pila JSON-RPC 2.0\r\n";
         http_response += "\r\n";
         
         http_response += body;
@@ -7335,7 +7335,7 @@ rpc_connection::json_rpc_response_t rpc_connection::json_signmessage(
 
             data_buffer buffer;
                     
-            std::string msg_magic = "Vcash Signed Message:\n";
+            std::string msg_magic = "Pila Signed Message:\n";
             buffer.write_var_int(msg_magic.size());
             buffer.write((void *)msg_magic.data(), msg_magic.size());
 
@@ -7718,7 +7718,7 @@ rpc_connection::json_rpc_response_t rpc_connection::json_verifymessage(
 
             data_buffer buffer;
                     
-            std::string msg_magic = "Vcash Signed Message:\n";
+            std::string msg_magic = "Pila Signed Message:\n";
             buffer.write_var_int(msg_magic.size());
             buffer.write((void *)msg_magic.data(), msg_magic.size());
 

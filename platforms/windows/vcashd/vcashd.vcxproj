@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6976AB5A-6D25-4813-9B02-8DDA56DD3896}</ProjectGuid>
-    <RootNamespace>vcashd</RootNamespace>
+    <RootNamespace>pilad</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
