@@ -20,3 +20,5 @@ Dependencies:
 * OpenSSL == 1.0.2k
 
 Linux: use https://github.com/cryptopila/pila-scripts
+For the ongoing migration to Go, see [docs/migration_plan.md](docs/migration_plan.md).
+The prototype Go module resides in the `go/` directory.
