@@ -38,7 +38,8 @@ Due to the large size and complexity of the existing code, the migration to Go i
 - Created a `go` directory containing the initial Go module.
 - Added `golang.org/x/crypto` and `goleveldb` as dependencies.
 - Implemented placeholder `Block` and `Transaction` types in `pkg/`.
-- `main.go` currently prints a simple message to verify the build.
+- `main.go` originally printed a simple message; it now demonstrates writing and
+  reading a block using `goleveldb`.
 
 ## Upcoming Work
 - Expand the P2P network layer using a `btcd`-style implementation.
