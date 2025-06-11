@@ -6,7 +6,8 @@ This document outlines the initial ideas for migrating the current C++ codebase 
 - Rewrite/enhancement based on Peercoin PoS and Bitcoin PoW
 - Contains custom features: UDP layer, ZeroTime transaction locking, Incentive Reward, ChainBlender
 - Relies heavily on Boost, Berkeley DB and OpenSSL
-- Codebase has roughly 100k lines of C/C++ spread across `coin`, `database` and `crawler`
+- Codebase has roughly 100k lines of C/C++ spread across `coin`, `database` and `crawler`.
+  See [module_mapping.md](module_mapping.md) for a proposed mapping of these directories to Go packages.
 
 ## Probability Estimate
 Due to the large size and complexity of the existing code, the migration to Go is estimated to have a **low probability of success (around 20%)** without significant resources and a dedicated team.
@@ -41,4 +42,16 @@ Due to the large size and complexity of the existing code, the migration to Go i
 ## Next Steps
 - Prepare a minimal Go module with the chosen dependencies (`golang.org/x/crypto`, `goleveldb`).
 - Start with a small prototype implementing basic block and transaction structures.
+
+## Verifying the Go Environment
+
+After running `go mod init pila`, a tiny executable can be built to
+confirm that Go is installed correctly. From the repository root run:
+
+```bash
+go run ./cmd/pila
+```
+
+This should print `pila go stub running` confirming the environment is ready
+for further development.
 
