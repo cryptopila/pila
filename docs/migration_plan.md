@@ -43,3 +43,15 @@ Due to the large size and complexity of the existing code, the migration to Go i
 - Prepare a minimal Go module with the chosen dependencies (`golang.org/x/crypto`, `goleveldb`).
 - Start with a small prototype implementing basic block and transaction structures.
 
+## Verifying the Go Environment
+
+After running `go mod init pila`, a tiny executable can be built to
+confirm that Go is installed correctly. From the repository root run:
+
+```bash
+go run ./cmd/pila
+```
+
+This should print `pila go stub running` confirming the environment is ready
+for further development.
+
