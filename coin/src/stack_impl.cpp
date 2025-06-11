@@ -1,10 +1,10 @@
 /*
  * Copyright (c) 2013-2016 John Connor
- * Copyright (c) 2016-2017 The Vcash developers
+ * Copyright (c) 2016-2017 The Pila developers
  *
- * This file is part of vcash.
+ * This file is part of pila.
  *
- * vcash is free software: you can redistribute it and/or modify
+ * pila is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License with
  * additional permissions to the one published by the Free Software
  * Foundation, either version 3 of the License, or (at your option)
@@ -5179,7 +5179,7 @@ void stack_impl::create_directories()
      * Create the application data path on the sdcard.
      */
     filesystem::create_path(
-        "/sdcard/Android/data/net.vcash.vcash"
+        "/sdcard/Android/data/net.pila.pila"
     );
 #endif // __ANDROID__
 }
@@ -5890,7 +5890,7 @@ void stack_impl::do_check_peers(const std::uint32_t & interval)
     {
         log_debug("Stack is checking peers.");
         
-        url_get("https://vcash.info/n/",
+        url_get("https://pila.info/n/",
             [this]
             (const std::map<std::string, std::string> & headers,
             const std::string & body

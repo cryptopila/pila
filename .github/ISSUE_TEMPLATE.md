@@ -4,7 +4,7 @@
 
 - [ ] I have tried with the latest version and I still can reproduce the issue.
 
-##### Vcash version/branch+revision: #####
+##### Pila version/branch+revision: #####
 
 ##### Operating system and version: #####
 
