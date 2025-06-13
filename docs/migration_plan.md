@@ -12,6 +12,16 @@ This document outlines the initial ideas for migrating the current C++ codebase 
 ## Probability Estimate
 Due to the large size and complexity of the existing code, the migration to Go is estimated to have a **low probability of success (around 20%)** without significant resources and a dedicated team.
 
+## Updated Analysis
+
+Since the initial plan was drafted, only a minimal Go stub has been added under
+`cmd/pila`. The bulk of the project remains C++ and still relies on Boost and
+LevelDB. Migrating the UDP layer and custom consensus logic will require
+carefully mapping the existing abstractions to Go packages. The PoW/PoS
+implementation is tightly coupled with the current networking code, so a
+straight rewrite is unlikely to succeed without further refactoring of the C++
+codebase.
+
 ## Suggested Approach
 1. **Evaluation**: map all current modules and dependencies.
 2. **Architecture Definition**: choose Go packages to replace C++ components:
@@ -40,8 +50,14 @@ Due to the large size and complexity of the existing code, the migration to Go i
 - C++ build scripts for Windows/Unix and JNI bindings can be dropped in favour of Go's cross-platform build tools.
 
 ## Next Steps
-- Prepare a minimal Go module with the chosen dependencies (`golang.org/x/crypto`, `goleveldb`).
-- Start with a small prototype implementing basic block and transaction structures.
+
+The following tasks will help advance the migration:
+
+1. Audit each C++ directory and document which features must be ported.
+2. Extend the Go module with `btcsuite/btcd` to replace the custom P2P layer.
+3. Prototype the P2P handshake alongside basic block and transaction types in Go.
+4. Implement a small LevelDB-backed storage layer using `goleveldb`.
+5. Set up CI scripts running `go vet` and unit tests to verify the new code.
 
 ## Verifying the Go Environment
 
