@@ -20,3 +20,5 @@ Dependencies:
 * OpenSSL == 1.0.2k
 
 Linux: use https://github.com/cryptopila/pila-scripts
+For the ongoing migration to Go, see [docs/migration_plan.md](docs/migration_plan.md).
+The migration aims to reimplement the project in Go for improved maintainability and streamlined dependencies. Detailed tasks are tracked in docs/migration_plan.md.
