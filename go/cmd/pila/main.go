@@ -17,9 +17,29 @@ func main() {
 	}
 	defer db.Close()
 
+	tx := coin.Transaction{
+		Version: 1,
+		Inputs: []coin.TxIn{{
+			PreviousOut: coin.PointOut{Hash: "prev", Index: 0},
+			ScriptSig:   []byte("sig"),
+			Sequence:    0xffffffff,
+		}},
+		Outputs: []coin.TxOut{{
+			Value:        50,
+			ScriptPubKey: []byte("pub"),
+		}},
+		LockTime: 0,
+	}
 	blk := coin.Block{
-		Hash:         "demo",
-		Transactions: []coin.Transaction{{ID: "tx1"}},
+		Header: coin.BlockHeader{
+			Version:    1,
+			PrevHash:   "0",
+			MerkleRoot: tx.Hash(),
+			Timestamp:  0,
+			Bits:       0,
+			Nonce:      0,
+		},
+		Transactions: []coin.Transaction{tx},
 	}
 
 	data, err := json.Marshal(blk)
@@ -40,5 +60,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("pila go stub running - loaded block %s with %d txs\n", out.Hash, len(out.Transactions))
+	fmt.Printf("pila go stub running - loaded block with %d txs\n", len(out.Transactions))
 }
