@@ -1,8 +1,8 @@
 package coin
 
 import (
+	"encoding/binary"
 	"encoding/hex"
-	"encoding/json"
 )
 
 // BlockHeader mirrors the basic Bitcoin block header structure.
@@ -15,10 +15,23 @@ type BlockHeader struct {
 	Nonce      uint32 `json:"nonce"`
 }
 
+// bytes serializes the header in the standard Bitcoin format.
+func (h BlockHeader) bytes() []byte {
+	buf := make([]byte, 80)
+	binary.LittleEndian.PutUint32(buf[0:4], h.Version)
+	prev, _ := hex.DecodeString(h.PrevHash)
+	copy(buf[4:36], prev)
+	root, _ := hex.DecodeString(h.MerkleRoot)
+	copy(buf[36:68], root)
+	binary.LittleEndian.PutUint32(buf[68:72], h.Timestamp)
+	binary.LittleEndian.PutUint32(buf[72:76], h.Bits)
+	binary.LittleEndian.PutUint32(buf[76:80], h.Nonce)
+	return buf
+}
+
 // Hash returns the sha256d of the encoded header as a hex string.
 func (h BlockHeader) Hash() string {
-	data, _ := json.Marshal(h)
-	sum := DoubleSHA256(data)
+	sum := DoubleSHA256(h.bytes())
 	return hex.EncodeToString(sum[:])
 }
 
