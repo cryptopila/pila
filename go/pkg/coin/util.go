@@ -12,3 +12,9 @@ func Hash160(data []byte) []byte {
 	r.Write(h[:])
 	return r.Sum(nil)
 }
+
+// DoubleSHA256 computes sha256d(data) which is sha256(sha256(data)).
+func DoubleSHA256(data []byte) [32]byte {
+	first := sha256.Sum256(data)
+	return sha256.Sum256(first[:])
+}

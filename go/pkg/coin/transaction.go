@@ -1,7 +1,6 @@
 package coin
 
 import (
-	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
 )
@@ -33,9 +32,16 @@ type Transaction struct {
 	LockTime uint32  `json:"lock_time"`
 }
 
-// Hash returns the sha256 hash of the serialized transaction.
-func (tx Transaction) Hash() string {
+// hashBytes returns the sha256d of the serialized transaction.
+func (tx Transaction) hashBytes() []byte {
 	data, _ := json.Marshal(tx)
-	sum := sha256.Sum256(data)
-	return hex.EncodeToString(sum[:])
+	sum := DoubleSHA256(data)
+	out := make([]byte, len(sum))
+	copy(out, sum[:])
+	return out
+}
+
+// Hash returns the hex-encoded sha256d hash of the serialized transaction.
+func (tx Transaction) Hash() string {
+	return hex.EncodeToString(tx.hashBytes())
 }

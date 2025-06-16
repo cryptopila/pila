@@ -32,15 +32,15 @@ func main() {
 	}
 	blk := coin.Block{
 		Header: coin.BlockHeader{
-			Version:    1,
-			PrevHash:   "0",
-			MerkleRoot: tx.Hash(),
-			Timestamp:  0,
-			Bits:       0,
-			Nonce:      0,
+			Version:   1,
+			PrevHash:  "0",
+			Timestamp: 0,
+			Bits:      0,
+			Nonce:     0,
 		},
 		Transactions: []coin.Transaction{tx},
 	}
+	blk.Header.MerkleRoot = blk.BuildMerkleRoot()
 
 	data, err := json.Marshal(blk)
 	if err != nil {
@@ -60,5 +60,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("pila go stub running - loaded block with %d txs\n", len(out.Transactions))
+	fmt.Printf("pila go stub running - loaded block %s with %d txs\n",
+		out.Header.Hash()[:8], len(out.Transactions))
 }
