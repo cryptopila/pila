@@ -29,7 +29,7 @@ Due to the large size and complexity of the existing code, the migration to Go i
 
 - [ ] Evaluate dependencies in `coin`, `database` and `crawler`.
 - [x] Prototype block and transaction structures in Go (complete).
-- [ ] Implement a basic P2P handshake.
+- [x] Implement a basic P2P handshake.
 - [ ] Stub LevelDB interactions for the `database` package.
 - [ ] Replace Boost-based networking in the `crawler` component.
 
