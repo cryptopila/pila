@@ -29,10 +29,18 @@ func (h BlockHeader) bytes() []byte {
 	return buf
 }
 
-// Hash returns the sha256d of the encoded header as a hex string.
+// Hash returns the block header hash as a hex string.  For historical
+// compatibility with the original C++ code, blocks with version < 5 use a
+// Whirlpool-based hash while newer versions use Blake-256.
 func (h BlockHeader) Hash() string {
-	sum := DoubleSHA256(h.bytes())
-	return hex.EncodeToString(sum[:])
+	var digest [32]byte
+	header := h.bytes()
+	if h.Version < 5 {
+		digest = WhirlpoolX(header)
+	} else {
+		digest = Blake256EightRound(header)
+	}
+	return hex.EncodeToString(digest[:])
 }
 
 // Block groups a header with a list of transactions.
