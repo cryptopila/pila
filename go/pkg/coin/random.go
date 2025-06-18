@@ -18,6 +18,7 @@ func randomUint64() uint64 {
 }
 
 // RandomUint8 returns a random uint8 in the range [0,max).
+// The returned value will always be strictly less than max.
 func RandomUint8(max uint8) uint8 {
 	if max == 0 {
 		return 0
@@ -26,6 +27,7 @@ func RandomUint8(max uint8) uint8 {
 }
 
 // RandomUint16 returns a random uint16 in the range [0,max).
+// The returned value will always be strictly less than max.
 func RandomUint16(max uint16) uint16 {
 	if max == 0 {
 		return 0
@@ -50,6 +52,7 @@ func RandomUint32Range(low, high uint32) uint32 {
 }
 
 // RandomUint32 returns a random uint32 in the range [0,max).
+// The returned value will always be strictly less than max.
 func RandomUint32(max uint32) uint32 {
 	if max == 0 {
 		return 0
@@ -58,6 +61,7 @@ func RandomUint32(max uint32) uint32 {
 }
 
 // RandomUint64 returns a random uint64 in the range [0,max).
+// The returned value will always be strictly less than max.
 func RandomUint64(max uint64) uint64 {
 	if max == 0 {
 		return 0
