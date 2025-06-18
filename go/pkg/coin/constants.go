@@ -40,4 +40,8 @@ const (
 	WorkAndStakeTargetSpacing = 200
 
 	PowCutoffBlock = 2147483647 - 1
+
+	// P2PProtocolVersion is used during peer handshakes to ensure
+	// both sides speak the same protocol.
+	P2PProtocolVersion uint32 = 1
 )
