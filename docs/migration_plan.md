@@ -28,7 +28,7 @@ Due to the large size and complexity of the existing code, the migration to Go i
 ## Immediate Task List
 
 - [ ] Evaluate dependencies in `coin`, `database` and `crawler`.
-- [ ] Prototype block and transaction structures in Go.
+- [x] Prototype block and transaction structures in Go (complete).
 - [ ] Implement a basic P2P handshake.
 - [ ] Stub LevelDB interactions for the `database` package.
 - [ ] Replace Boost-based networking in the `crawler` component.
@@ -44,6 +44,9 @@ Due to the large size and complexity of the existing code, the migration to Go i
 - Start with a small prototype implementing basic block and transaction structures.
 
 ## Progress
+- Added hashing helpers and blockchain constants in Go.
+- Introduced `MedianFilter`, `Time` and random utilities.
+- Implemented filesystem helper functions with tests.
 - Created a `go` directory containing the initial Go module.
 - Added `golang.org/x/crypto` and `goleveldb` as dependencies.
 - Implemented placeholder `Block` and `Transaction` types in `pkg/`.
