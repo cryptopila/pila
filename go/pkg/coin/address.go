@@ -21,6 +21,16 @@ type Address struct {
 	Base58
 }
 
+// SetString decodes a base58check string into the address.
+func (a *Address) SetString(val string) bool {
+	return a.Base58.SetString(val)
+}
+
+// String returns the base58check encoding of the address including the version byte.
+func (a Address) String() string {
+	return a.Base58.ToString(true)
+}
+
 func (a *Address) SetIDKey(id IDKey) bool {
 	if TestNet {
 		a.SetData(TypePubKeyTest, id[:])
