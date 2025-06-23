@@ -30,7 +30,7 @@ Due to the large size and complexity of the existing code, the migration to Go i
 - [ ] Evaluate dependencies in `coin`, `database` and `crawler`.
 - [x] Prototype block and transaction structures in Go (complete).
 - [x] Implement a basic P2P handshake.
-- [ ] Stub LevelDB interactions for the `database` package.
+- [x] Stub LevelDB interactions for the `database` package.
 - [ ] Replace Boost-based networking in the `crawler` component.
 
 ## What Can Be Ignored or Replaced
@@ -52,10 +52,13 @@ Due to the large size and complexity of the existing code, the migration to Go i
 - Implemented placeholder `Block` and `Transaction` types in `pkg/`.
 - `main.go` originally printed a simple message; it now demonstrates writing and
   reading a block using `goleveldb`.
+- Introduced a stub `database` package wrapping `goleveldb`.
+- Added a minimal `crawler` package implementing peer connection and handshake tests.
+- Implemented basic block validation checking the merkle root.
 
 ## Upcoming Work
 - Expand the P2P network layer using a `btcd`-style implementation.
-- Flesh out block validation logic and integrate storage with `goleveldb`.
+- Continue improving block validation logic and integrate storage with `goleveldb`.
 
 ## Verifying the Go Environment
 

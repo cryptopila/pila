@@ -1,17 +1,15 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 
-	"github.com/syndtr/goleveldb/leveldb"
-
 	"pila/pkg/coin"
+	"pila/pkg/database"
 )
 
 func main() {
-	db, err := leveldb.OpenFile("./db", nil)
+	db, err := database.Open("./db")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -42,21 +40,11 @@ func main() {
 	}
 	blk.Header.MerkleRoot = blk.BuildMerkleRoot()
 
-	data, err := json.Marshal(blk)
+	if err := db.PutBlock(blk); err != nil {
+		log.Fatal(err)
+	}
+	out, err := db.GetBlock(blk.Header.Hash())
 	if err != nil {
-		log.Fatal(err)
-	}
-	if err := db.Put([]byte("block:1"), data, nil); err != nil {
-		log.Fatal(err)
-	}
-
-	raw, err := db.Get([]byte("block:1"), nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var out coin.Block
-	if err := json.Unmarshal(raw, &out); err != nil {
 		log.Fatal(err)
 	}
 
