@@ -1,21 +1,35 @@
 package main
 
 import (
-	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 
-	"github.com/syndtr/goleveldb/leveldb"
-
 	"pila/pkg/coin"
+	"pila/pkg/database"
 )
 
 func main() {
-	db, err := leveldb.OpenFile("./db", nil)
+	list := flag.Bool("list", false, "list blocks")
+	dbPath := flag.String("db", "./db", "database path")
+	flag.Parse()
+
+	db, err := database.Open(*dbPath)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
+
+	if *list {
+		blocks, err := db.ListBlocks()
+		if err != nil {
+			log.Fatal(err)
+		}
+		for _, b := range blocks {
+			fmt.Printf("block %s with %d txs\n", b.Header.Hash()[:8], len(b.Transactions))
+		}
+		return
+	}
 
 	tx := coin.Transaction{
 		Version: 1,
@@ -42,21 +56,11 @@ func main() {
 	}
 	blk.Header.MerkleRoot = blk.BuildMerkleRoot()
 
-	data, err := json.Marshal(blk)
+	if err := db.PutBlock(blk); err != nil {
+		log.Fatal(err)
+	}
+	out, err := db.GetBlock(blk.Header.Hash())
 	if err != nil {
-		log.Fatal(err)
-	}
-	if err := db.Put([]byte("block:1"), data, nil); err != nil {
-		log.Fatal(err)
-	}
-
-	raw, err := db.Get([]byte("block:1"), nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var out coin.Block
-	if err := json.Unmarshal(raw, &out); err != nil {
 		log.Fatal(err)
 	}
 

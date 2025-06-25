@@ -3,6 +3,7 @@ package coin
 import (
 	"encoding/binary"
 	"encoding/hex"
+	"fmt"
 )
 
 // BlockHeader mirrors the basic Bitcoin block header structure.
@@ -74,4 +75,24 @@ func (b Block) BuildMerkleRoot() string {
 	}
 
 	return hex.EncodeToString(layer[0])
+}
+
+// Validate performs basic sanity checks on the block.
+// It currently verifies the merkle root matches the transactions.
+func (b Block) Validate() error {
+	if len(b.Transactions) == 0 {
+		return fmt.Errorf("no transactions")
+	}
+	if b.Header.MerkleRoot != b.BuildMerkleRoot() {
+		return fmt.Errorf("invalid merkle root")
+	}
+	seen := make(map[string]struct{})
+	for _, tx := range b.Transactions {
+		h := tx.Hash()
+		if _, ok := seen[h]; ok {
+			return fmt.Errorf("duplicate transaction %s", h)
+		}
+		seen[h] = struct{}{}
+	}
+	return nil
 }
