@@ -42,3 +42,29 @@ func TestListenAndServeHandshakeError(t *testing.T) {
 		t.Fatalf("expected error")
 	}
 }
+
+func TestCrawlerConnectAndClose(t *testing.T) {
+	ln, err := ListenAndServe("127.0.0.1:0", "server")
+	if err != nil {
+		t.Fatalf("listen: %v", err)
+	}
+	defer ln.Close()
+
+	c := New("client")
+	peer, err := c.Connect(ln.Addr().String())
+	if err != nil {
+		t.Fatalf("connect: %v", err)
+	}
+
+	if len(c.peers) != 1 {
+		t.Fatalf("expected 1 peer, got %d", len(c.peers))
+	}
+	if peer.ID != "server" {
+		t.Fatalf("unexpected peer id %s", peer.ID)
+	}
+
+	c.Close()
+	if _, err := peer.Conn.Write([]byte{0}); err == nil {
+		t.Fatalf("connection should be closed")
+	}
+}

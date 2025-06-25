@@ -3,6 +3,7 @@ package crawler
 import (
 	"log"
 	"net"
+	"sync"
 
 	"pila/pkg/coin"
 )
@@ -52,4 +53,39 @@ func ListenAndServe(addr, nodeID string) (net.Listener, error) {
 		}
 	}()
 	return ln, nil
+}
+
+// Crawler manages outbound peer connections.
+type Crawler struct {
+	NodeID string
+
+	mu    sync.Mutex
+	peers map[string]*Peer
+}
+
+// New returns a new crawler instance.
+func New(nodeID string) *Crawler {
+	return &Crawler{NodeID: nodeID, peers: make(map[string]*Peer)}
+}
+
+// Connect adds a new peer connection to addr and stores it on success.
+func (c *Crawler) Connect(addr string) (*Peer, error) {
+	p, err := Connect(addr, c.NodeID)
+	if err != nil {
+		return nil, err
+	}
+	c.mu.Lock()
+	c.peers[addr] = p
+	c.mu.Unlock()
+	return p, nil
+}
+
+// Close terminates all peer connections.
+func (c *Crawler) Close() {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	for addr, p := range c.peers {
+		_ = p.Conn.Close()
+		delete(c.peers, addr)
+	}
 }
