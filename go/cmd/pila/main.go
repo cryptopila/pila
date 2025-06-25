@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 
@@ -9,11 +10,26 @@ import (
 )
 
 func main() {
-	db, err := database.Open("./db")
+	list := flag.Bool("list", false, "list blocks")
+	dbPath := flag.String("db", "./db", "database path")
+	flag.Parse()
+
+	db, err := database.Open(*dbPath)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
+
+	if *list {
+		blocks, err := db.ListBlocks()
+		if err != nil {
+			log.Fatal(err)
+		}
+		for _, b := range blocks {
+			fmt.Printf("block %s with %d txs\n", b.Header.Hash()[:8], len(b.Transactions))
+		}
+		return
+	}
 
 	tx := coin.Transaction{
 		Version: 1,
