@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/syndtr/goleveldb/leveldb"
+	"github.com/syndtr/goleveldb/leveldb/util"
 
 	"pila/pkg/coin"
 )
@@ -61,4 +62,29 @@ func (d *DB) GetBlock(hash string) (coin.Block, error) {
 		return out, err
 	}
 	return out, nil
+}
+
+// ListBlocks returns all blocks stored in the database. Any invalid block
+// encountered during iteration results in an error.
+func (d *DB) ListBlocks() ([]coin.Block, error) {
+	var blocks []coin.Block
+	iter := d.db.NewIterator(util.BytesPrefix([]byte("block:")), nil)
+	for iter.Next() {
+		var b coin.Block
+		if err := json.Unmarshal(iter.Value(), &b); err != nil {
+			iter.Release()
+			return nil, err
+		}
+		if err := b.Validate(); err != nil {
+			iter.Release()
+			return nil, err
+		}
+		blocks = append(blocks, b)
+	}
+	if err := iter.Error(); err != nil {
+		iter.Release()
+		return nil, err
+	}
+	iter.Release()
+	return blocks, nil
 }
