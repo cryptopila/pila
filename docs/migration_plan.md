@@ -63,9 +63,10 @@ Due to the large size and complexity of the existing code, the migration to Go i
 ## Verifying the Go Environment
 
 After running `go mod init pila`, a tiny executable can be built to
-confirm that Go is installed correctly. From the repository root run:
+confirm that Go is installed correctly. From the `go` directory run:
 
 ```bash
+cd go
 go run ./cmd/pila
 ```
 

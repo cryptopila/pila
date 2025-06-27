@@ -10,4 +10,8 @@ require (
 	golang.org/x/exp v0.0.0-20250606033433-dcc06ee1d476
 )
 
-require github.com/golang/snappy v0.0.0-20180518054509-2e65f85255db // indirect
+require (
+	github.com/btcsuite/btcd/btcec/v2 v2.3.5 // indirect
+	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.0.1 // indirect
+	github.com/golang/snappy v0.0.0-20180518054509-2e65f85255db // indirect
+)
