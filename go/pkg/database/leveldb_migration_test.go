@@ -20,7 +20,7 @@ func openDB(t *testing.T, path string, opts *opt.Options) *leveldb.DB {
 	return db
 }
 
-func TestLevelDBCTaskMigration(t *testing.T) {
+func TestLevelDBMigration(t *testing.T) {
 	dir := t.TempDir()
 	path := filepath.Join(dir, "testdb")
 
